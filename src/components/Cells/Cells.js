@@ -26,12 +26,12 @@ export const Cells = () => {
         if(gameStatus) {
             newGame = setInterval(() => {
                 randomNumber();
-                createCells(true);
+                createCells(gameStatus);
             }, level.timer);
 
         } else {
             clearInterval(newGame);
-            createCells(false);
+            createCells(gameStatus);
         }
 
         return () => {
