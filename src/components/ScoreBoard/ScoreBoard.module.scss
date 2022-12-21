@@ -1,0 +1,28 @@
+.scoreBoard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+  }
+  
+  .levelBoxWrapper {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .btn {
+    background-color: transparent;
+    border: 1px solid #fff;
+    padding: 2px 5px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    // transition: hover 50ms linear;
+  
+    // &:hover {
+    //   transform: scale(0.95);
+    // }
+    &:active {
+      transform: scale(0.9);
+    }
+  }

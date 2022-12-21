@@ -1,0 +1,9 @@
+.levelBox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    & label {
+      text-transform: capitalize;
+    }
+  }
