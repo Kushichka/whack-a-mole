@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 
-import { setLevel } from '../../redux/reducers/gameReducer';
+import { setDifficulty } from '../../redux/reducers/gameReducer';
 
-import style from './Levels.module.scss';
+import style from './Difficulty.module.scss';
 
 const elements = [
     {name: 'easy', id: 0, timer: 1500},
@@ -10,22 +10,22 @@ const elements = [
     {name: 'hard', id: 2, timer: 500}
 ];
 
-export const Levels = () => {
+export const Difficulty = () => {
     const dispatch = useDispatch();
 
-    const levelHandler = (e) => {
-        dispatch(setLevel(elements[e.target.value]));
+    const difficultHandler = (e) => {
+        dispatch(setDifficulty(elements[e.target.value]));
     }
 
-    const level = elements.map(({name, id}) => {
+    const difficulty = elements.map(({name, id}) => {
         return (
-            <div key={name} className={style.levelBox}>
+            <div key={name} className={style.difficultyBox}>
                 <input 
                     type="radio" 
-                    name='level' 
+                    name='difficulty' 
                     id={name} 
                     value={id} 
-                    onChange={levelHandler}
+                    onChange={difficultHandler}
                     defaultChecked = {id === 0 ? true : false}
                 />
                 <label htmlFor={name}>{name}</label>
@@ -35,7 +35,7 @@ export const Levels = () => {
 
     return (
         <>
-            {level}
+            {difficulty}
         </>
     )
 }

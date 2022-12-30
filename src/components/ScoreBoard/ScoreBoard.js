@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setGameStatus } from '../../redux/reducers/gameReducer';
-import { Levels } from '../Levels/Levels';
+import { Difficulty } from '../Difficulty/Difficulty';
 import { PlayerScore } from '../PlayerScore/PlayerScore';
 
 import style from './ScoreBoard.module.scss';
@@ -19,8 +19,8 @@ export const ScoreBoard = () => {
     return (
         <div className={style.scoreBoard}>
             <PlayerScore name='Computer' />
-            <div className={style.levelBoxWrapper}>
-                <Levels />
+            <div className={style.difficultyBoxWrapper}>
+                <Difficulty />
                 <button className={style.btn} onClick={handleStart}>
                     {!gameStatus ? 'Start' : 'Stop'}
                 </button>

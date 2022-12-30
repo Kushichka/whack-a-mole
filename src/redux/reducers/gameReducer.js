@@ -4,8 +4,9 @@ const gameReducer = createSlice({
     name: 'game',
     initialState: {
         gameStatus: false,
+        winner: '',
         winCell: null,
-        level: {id: 1, timer: 1500},
+        difficulty: {id: 0, timer: 1500},
         score: {player: 0, computer: 0}
     },
     reducers: {
@@ -15,8 +16,8 @@ const gameReducer = createSlice({
         setWinCell: (state, action) => {
             state.winCell = action.payload;
         },
-        setLevel: (state, action) => {
-            state.level = {
+        setDifficulty: (state, action) => {
+            state.difficulty = {
                 id: action.payload.id,
                 timer: action.payload.timer
             }
@@ -32,5 +33,5 @@ const gameReducer = createSlice({
     }
 })
 
-export const { setGameStatus, setWinCell, setLevel, setScore } = gameReducer.actions;
+export const { setGameStatus, setWinCell, setDifficulty, setScore } = gameReducer.actions;
 export default gameReducer.reducer;
