@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setGameStatus } from '../../redux/reducers/gameReducer';
+import { resetStore, setGameStatus } from '../../redux/reducers/gameSlice';
 import { Difficulty } from '../Difficulty/Difficulty';
 import { PlayerScore } from '../PlayerScore/PlayerScore';
 
@@ -8,10 +8,13 @@ import style from './ScoreBoard.module.scss';
 
 export const ScoreBoard = () => {
     const dispatch = useDispatch();
-    const { gameStatus } = useSelector(state => state.gameReducer);
+
+    const { gameStatus } = useSelector(state => state.game);
 
     const handleStart = (e) => {
         e.preventDefault();
+
+        !gameStatus && dispatch(resetStore());
 
         dispatch(setGameStatus());
     }

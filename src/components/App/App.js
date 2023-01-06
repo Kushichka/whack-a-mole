@@ -8,7 +8,7 @@ import style from './App.module.scss';
 
 
 function App() {
-  const { winner } = useSelector(state => state.gameReducer);
+  const { winner } = useSelector(state => state.game);
 
   return (
     <div className={style.app}>

@@ -1,6 +1,7 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setDifficulty } from '../../redux/reducers/gameReducer';
+import { setDifficulty } from '../../redux/reducers/gameSlice';
 
 import style from './Difficulty.module.scss';
 
@@ -10,7 +11,7 @@ const elements = [
     {name: 'hard', id: 2, timer: 500}
 ];
 
-export const Difficulty = () => {
+export const Difficulty = React.memo(() => {
     const dispatch = useDispatch();
 
     const difficultHandler = (e) => {
@@ -32,10 +33,10 @@ export const Difficulty = () => {
             </div>
         )
     });
-
+    
     return (
         <>
             {difficulty}
         </>
     )
-}
+});

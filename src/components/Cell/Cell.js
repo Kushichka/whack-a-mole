@@ -1,36 +1,53 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
-import { setIsPlayerWin, setRoundEnd } from '../../redux/reducers/gameReducer';
+import { checkWinner, setRoundEnd } from '../../redux/reducers/gameSlice';
 
 import style from './Cell.module.scss';
 
-export const Cell = ({id, gameStatus}) => {
+export const Cell = ({id}) => {
     const dispatch = useDispatch();
 
-    const { winCell } = useSelector(state => state.gameReducer);
+    const { winCell, gameStatus } = useSelector(state => state.game);
+
+    const [isHit, setIsHit] = useState(null);
+
+    useEffect(() => {
+        if (!gameStatus) {
+            setIsHit(null);
+        }
+    }, [gameStatus]);
+    
 
     const handleClick = (e) => {
         e.preventDefault();
-        +e.target.id === winCell && dispatch(setIsPlayerWin(true));
+
+        dispatch(checkWinner({winner: 'player'}));
         dispatch(setRoundEnd(true));
-        console.log(e.target.id);
+        setIsHit(true);
     }
+
+    const classes = classNames(style.cell, {
+        [style.blue]: gameStatus && winCell === id,
+        [style.green]: gameStatus && isHit,
+        [style.red]: gameStatus && isHit === false
+    })
 
     return (
         <>
             <td
-                className={`${style.cell} ${gameStatus && winCell === id ? style.blue : ''}`}
+                className={classes}
                 id={id}
-                onClick={gameStatus ? handleClick : null}
+                onClick={gameStatus && winCell === id ? handleClick : null}
             >
-                {id}
+                {/* {id} */}
             </td>
         </>
     )
 };
 
 Cell.propTypes = {
-    id: PropTypes.number,
-    gameStatus: PropTypes.bool
+    id: PropTypes.number.isRequired
 }

@@ -1,31 +1,39 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setWinCell, checkWinner, setRoundEnd, setIsPlayerWin } from '../../redux/reducers/gameReducer';
+import { 
+    setWinCell, checkWinner, setRoundEnd,
+    setGameStatus, setUsedCells 
+} from '../../redux/reducers/gameSlice';
 import { Cell } from '../Cell/Cell';
 
 import style from './GameField.module.scss';
 
-const fieldSize = 10;
-
-// при нажатии стоп, генерировать поле без кликов
-// генерировать уникальное число исходя из массива в сторе
+// usedCells приходит пустой.
+// Клетка должна закрашиваться в красный цвет по истечению времени.
 
 export const GameField = () => {
     const dispatch = useDispatch();
 
-    const { gameStatus, difficulty, roundEnd, winCell, isPlayerWin } = useSelector(state => state.gameReducer)
+    const { gameStatus, difficulty, roundEnd, winCell,
+            winner, fieldSize, usedCells
+        } = useSelector(state => state.game)
 
-    const [cells, setCells] = useState([]);
+    const [field, setField] = useState([]);
+
+    useEffect(() => {
+        winner && dispatch(setGameStatus());
+    }, [winner])
 
     useEffect(() => {
         let newGame = null;
 
         if (gameStatus) {
-            newGame = setInterval(() => {
+            newGame = setInterval(() => {                
                 randomNumber();
             }, difficulty.timer);
         } else {
+            createField();
             clearInterval(newGame);
         }
 
@@ -35,58 +43,59 @@ export const GameField = () => {
     }, [gameStatus]);
 
     useEffect(() => {
-        createCells();
-
         if (gameStatus) {
-            if (roundEnd) {
-                if (isPlayerWin) {
-                    dispatch(checkWinner({winner: 'player', winCell})) 
-                } else {
-                    dispatch(checkWinner({winner: 'computer', winCell}));
-                }
-    
-                dispatch(setRoundEnd(false));
+            createField();
+
+            if (roundEnd === null || roundEnd === true) {
+                dispatch(setRoundEnd(false))
             } else {
-                dispatch(checkWinner({winner: 'computer', winCell}));
+                dispatch(checkWinner({winner: 'computer'}))
             }
-    
-            isPlayerWin && dispatch(setIsPlayerWin(false));
         }
-    }, [winCell])
+    }, [winCell]);
 
     const randomNumber = () => {
-        const rand = Math.floor(Math.random() * 100);
-        dispatch(setWinCell(rand));
+        let status = false;
+        
+        for (let i = 0; status === false; i++) {
+            const random = Math.floor(Math.random() * 100);
+
+            if (usedCells.includes(random)) {
+                i++;
+            } else {
+                status = true;
+                dispatch(setWinCell(random));
+                dispatch(setUsedCells(random));
+                // console.log(usedCells);
+            }
+        }
     }
 
-    const createRow = (idx) => {
-        const row = [];
+    const createCells = (idx) => {
+        const cells = [];
 
         for (let i = 0; i < fieldSize; i++) {
-            row[i] = <Cell
-                key={+`${idx}${i}`}
-                id={+`${idx}${i}`}
-                gameStatus={gameStatus}
-                setIsPlayerWin={setIsPlayerWin}
-            />;
+            cells[i] = <Cell
+                        key={+`${idx}${i}`}
+                        id={+`${idx}${i}`} />;
         }
 
-        return row;
+        return cells;
     }
 
-    const createCells = () => {
-        const cells = new Array(fieldSize).fill().map((row, idx) => (
-            row = <tr key={idx}>{createRow(idx)}</tr>
+    const createField = () => {
+        const rows = new Array(fieldSize).fill().map((_, idx) => (
+            <tr key={idx}>{createCells(idx)}</tr>
         ))
 
-        setCells(cells);
+        setField(rows);
     }
 
     return (
         <div className={style.wrapper}>
             <table>
                 <tbody>
-                    {cells}
+                    {field}
                 </tbody>
             </table>
         </div>

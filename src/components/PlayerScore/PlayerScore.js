@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import style from './PlayerScore.module.scss';
 
 export const PlayerScore = ({name}) => {
-    const { score } = useSelector(state => state.gameReducer); 
+    const { score } = useSelector(state => state.game); 
 
     const element = () => {
         if(name === 'Computer')  {
