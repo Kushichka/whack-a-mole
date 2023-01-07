@@ -6,6 +6,7 @@ const initialState = {
     winCell: null,
     difficulty: { id: 0, timer: 1500 },
     score: { player: 0, computer: 0 },
+    row: [],
     usedCells: [22, 11],
     fieldSize: 10,
     roundEnd: null

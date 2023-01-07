@@ -1,6 +1,11 @@
-
 .wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0px 0px 24px 0px #212121;
+    cursor: url(../../assets/h1.svg) 10 20, auto;
+
+    &:active {
+        cursor: url(../../assets/h2.svg) 10 20, auto;
+    }
 }
