@@ -1,36 +1,37 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { 
-    setWinCell, checkWinner, setRoundEnd,
-    setGameStatus, setUsedCells 
-} from '../../redux/reducers/gameSlice';
+import { setWinner, setRoundEnd, setGameStatus, randomNumber, checkWinner } from '../../redux/reducers/gameSlice';
 import { Cell } from '../Cell/Cell';
 
 import style from './GameField.module.scss';
 
-// usedCells приходит пустой.
-// Клетка должна закрашиваться в красный цвет по истечению времени.
+// использовать middleware для проверки клетки.
+// 0 в массиве не может быть -0.
 
 export const GameField = () => {
     const dispatch = useDispatch();
 
     const { gameStatus, difficulty, roundEnd, winCell,
-            winner, fieldSize, usedCells
+            winner, fieldSize
         } = useSelector(state => state.game)
 
     const [field, setField] = useState([]);
 
     useEffect(() => {
         winner && dispatch(setGameStatus());
-    }, [winner])
+    }, [winner, dispatch])
 
     useEffect(() => {
         let newGame = null;
 
         if (gameStatus) {
-            newGame = setInterval(() => {                
-                randomNumber();
+            newGame = setInterval(() => {    
+                dispatch(checkWinner()); // middleware вместо этой функции
+                            
+                dispatch(randomNumber());
+                
+                createField();
             }, difficulty.timer);
         } else {
             createField();
@@ -42,34 +43,13 @@ export const GameField = () => {
         }
     }, [gameStatus]);
 
-    useEffect(() => {
-        if (gameStatus) {
-            createField();
+    // useEffect(() => {
+    //     if (gameStatus) {
+    //         createField();
 
-            if (roundEnd === null || roundEnd === true) {
-                dispatch(setRoundEnd(false))
-            } else {
-                dispatch(checkWinner({winner: 'computer'}))
-            }
-        }
-    }, [winCell]);
-
-    const randomNumber = () => {
-        let status = false;
-        
-        for (let i = 0; status === false; i++) {
-            const random = Math.floor(Math.random() * 100);
-
-            if (usedCells.includes(random)) {
-                i++;
-            } else {
-                status = true;
-                dispatch(setWinCell(random));
-                dispatch(setUsedCells(random));
-                // console.log(usedCells);
-            }
-        }
-    }
+            
+    //     }
+    // }, [winCell]);
 
     const createCells = (idx) => {
         const cells = [];

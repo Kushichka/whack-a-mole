@@ -6,8 +6,7 @@ const initialState = {
     winCell: null,
     difficulty: { id: 0, timer: 1500 },
     score: { player: 0, computer: 0 },
-    row: [],
-    usedCells: [22, 11],
+    usedCells: [],
     fieldSize: 10,
     roundEnd: null
 };
@@ -19,18 +18,21 @@ const gameSlice = createSlice({
         setGameStatus: (state) => {
             state.gameStatus = !state.gameStatus;
         },
-        setWinCell: (state, action) => {
-            state.winCell = action.payload;
-        },
         setDifficulty: (state, action) => {
             state.difficulty = {
                 id: action.payload.id,
                 timer: action.payload.timer
             }
         },
-        checkWinner: (state, action) => {
+        setWinner: (state, action) => {
             if (action.payload.winner === 'computer') {
                 state.score.computer += 1;
+
+                state.usedCells.splice(
+                    state.usedCells.indexOf(state.winCell), // rewrite number with minus sign for indetify winner
+                    1,
+                    -state.winCell
+                );
             } 
             
             if (action.payload.winner === 'player') {
@@ -51,15 +53,40 @@ const gameSlice = createSlice({
         setRoundEnd: (state, action) => {
             state.roundEnd = action.payload;
         },
-        setUsedCells: (state, action) => {
-            state.usedCells.push(action.payload);
-        },
         resetStore: (state) => {
             state.winner = '';
             state.winCell = null;
             state.score = { player: 0, computer: 0 };
             state.usedCells = [];
             state.roundEnd = null;
+        },
+        randomNumber: (state) => {
+            let status = false;
+
+            while (!status) {
+                const random = Math.floor(Math.random() * 100);
+
+                if (state.usedCells.includes(random) || state.usedCells.includes(-random)) {
+                    continue;
+                } else {
+                    status = true;
+                    state.winCell = random;
+                    state.usedCells.push(random);
+                }
+            }
+        },
+        checkWinner: (state) => {
+            if (state.roundEnd === null || state.roundEnd) {
+                state.roundEnd = false;
+            } else {
+                state.score.computer += 1;
+
+                state.usedCells.splice(
+                    state.usedCells.indexOf(state.winCell), // rewrite number with minus sign for indetify winner
+                    1,
+                    -state.winCell
+                );
+            }
         }
     }
 })
@@ -68,7 +95,7 @@ export const {actions, reducer} = gameSlice;
 
 export default reducer;
 export const { 
-    setGameStatus, setWinCell, setDifficulty, 
-    checkWinner, setRoundEnd, resetStore,
-    setUsedCells
+    setGameStatus, setDifficulty, setWinner, 
+    setRoundEnd, resetStore, randomNumber,
+    checkWinner
 } = actions;

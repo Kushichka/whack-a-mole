@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { checkWinner, setRoundEnd } from '../../redux/reducers/gameSlice';
+import { setWinner, setRoundEnd } from '../../redux/reducers/gameSlice';
 
 import style from './Cell.module.scss';
 
 export const Cell = ({id}) => {
     const dispatch = useDispatch();
 
-    const { winCell, gameStatus } = useSelector(state => state.game);
+    const { winCell, gameStatus, usedCells } = useSelector(state => state.game);
 
-    const [isHit, setIsHit] = useState(null);
+    const [isHit, setIsHit] = useState(false);
 
     useEffect(() => {
         if (!gameStatus) {
@@ -24,15 +24,15 @@ export const Cell = ({id}) => {
     const handleClick = (e) => {
         e.preventDefault();
 
-        dispatch(checkWinner({winner: 'player'}));
+        dispatch(setWinner({winner: 'player'}));
         dispatch(setRoundEnd(true));
         setIsHit(true);
     }
 
     const classes = classNames(style.cell, {
         [style.blue]: gameStatus && winCell === id,
-        [style.green]: gameStatus && isHit,
-        [style.red]: gameStatus && isHit === false
+        [style.green]: gameStatus && usedCells.find(num => num === id) && isHit,
+        [style.red]: gameStatus && usedCells.find(num => num === -id) && !isHit
     })
 
     return (
