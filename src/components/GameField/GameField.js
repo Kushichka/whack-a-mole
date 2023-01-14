@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setWinner, setRoundEnd, setGameStatus, randomNumber, checkWinner } from '../../redux/reducers/gameSlice';
+import { setGameStatus, randomNumber, checkWinner } from '../../redux/slices/gameSlice';
 import { Cell } from '../Cell/Cell';
 
 import style from './GameField.module.scss';
@@ -12,9 +12,7 @@ import style from './GameField.module.scss';
 export const GameField = () => {
     const dispatch = useDispatch();
 
-    const { gameStatus, difficulty, roundEnd, winCell,
-            winner, fieldSize
-        } = useSelector(state => state.game)
+    const { gameStatus, difficulty, winner, fieldSize } = useSelector(state => state.game)
 
     const [field, setField] = useState([]);
 
@@ -41,15 +39,9 @@ export const GameField = () => {
         return () => {
             clearInterval(newGame);
         }
+
+        // eslint-disable-next-line
     }, [gameStatus]);
-
-    // useEffect(() => {
-    //     if (gameStatus) {
-    //         createField();
-
-            
-    //     }
-    // }, [winCell]);
 
     const createCells = (idx) => {
         const cells = [];

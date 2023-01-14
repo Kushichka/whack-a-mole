@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { setWinner, setRoundEnd } from '../../redux/reducers/gameSlice';
+import { setWinner, setRoundEnd } from '../../redux/slices/gameSlice';
 
 import style from './Cell.module.scss';
 

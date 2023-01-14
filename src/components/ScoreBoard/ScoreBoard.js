@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { resetStore, setGameStatus } from '../../redux/reducers/gameSlice';
+import { resetStore, setGameStatus } from '../../redux/slices/gameSlice';
 import { Difficulty } from '../Difficulty/Difficulty';
 import { PlayerScore } from '../PlayerScore/PlayerScore';
 

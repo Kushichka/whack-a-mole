@@ -87,6 +87,14 @@ const gameSlice = createSlice({
                     -state.winCell
                 );
             }
+
+            if (state.score.computer >= (((state.fieldSize * state.fieldSize) / 2) + 1)) {
+                state.winner = 'Computer';
+            }
+
+            if (state.score.computer === 50 && state.score.player === 50) {
+                state.winner = 'Nobody won, try again';
+            }
         }
     }
 })

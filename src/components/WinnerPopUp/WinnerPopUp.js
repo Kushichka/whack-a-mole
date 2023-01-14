@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { resetStore } from '../../redux/reducers/gameSlice';
+import { resetStore } from '../../redux/slices/gameSlice';
 
 import style from './WinnerPopUp.module.scss';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setDifficulty } from '../../redux/reducers/gameSlice';
+import { setDifficulty } from '../../redux/slices/gameSlice';
 
 import style from './Difficulty.module.scss';
 
