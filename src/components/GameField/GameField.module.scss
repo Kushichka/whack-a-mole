@@ -3,9 +3,33 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0px 0px 24px 0px #212121;
-    cursor: url(../../assets/h1.svg) 10 20, auto;
+    cursor: url(../../assets/hammer-up.svg) 10 15, auto;
+    // cursor: url(../../assets/h1.svg) 10 20, auto;
 
     &:active {
-        cursor: url(../../assets/h2.svg) 10 20, auto;
+        cursor: url(../../assets/hammer-down.svg) 10 15, auto;
+        // cursor: url(../../assets/h2.svg) 10 20, auto;
     }
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    background-color: #795548;
+    color: #000;
+}
+
+.blue {
+    // background-color: #3949AB;
+    background-image: url(../../assets/mole.png);
+    background-size: contain;
+    background-position: center center;
+}
+
+.green {
+    background-color: #43A047;
+}
+
+.red {
+    background-color: #E53935;
 }

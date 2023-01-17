@@ -1,8 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit"; 
+import { configureStore } from "@reduxjs/toolkit";
 
-import gameSlice from './slices/gameSlice';
+import game from './slices/gameSlice';
+import { winnerMiddleware } from "./middlewares/winnerMiddleware";
 
 export const store = configureStore({
-    reducer: {game: gameSlice}
+    reducer: { game },
+    middleware: [winnerMiddleware]
 });
 

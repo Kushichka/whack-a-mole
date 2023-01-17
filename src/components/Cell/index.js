@@ -24,8 +24,8 @@ export const Cell = ({id}) => {
     const handleClick = (e) => {
         e.preventDefault();
 
-        dispatch(setWinner({winner: 'player'}));
         dispatch(setRoundEnd(true));
+        dispatch(setWinner('player'));
         setIsHit(true);
     }
 
@@ -42,7 +42,7 @@ export const Cell = ({id}) => {
                 id={id}
                 onClick={gameStatus && winCell === id ? handleClick : null}
             >
-                {/* {id} */}
+                {id}
             </td>
         </>
     )

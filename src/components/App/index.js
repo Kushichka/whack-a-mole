@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 
-import { GameField } from '../GameField/GameField';
-import { ScoreBoard } from '../ScoreBoard/ScoreBoard';
-import { WinnerPopUp } from '../WinnerPopUp/WinnerPopUp';
+import { GameField } from '../GameField';
+import { ScoreBoard } from '../ScoreBoard';
+import { WinnerPopUp } from '../WinnerPopUp';
 
 import style from './App.module.scss';
 
@@ -16,7 +16,7 @@ function App() {
           <div className={style.gameBox}>
             <ScoreBoard />
             <GameField />
-            {winner && <WinnerPopUp winner={winner}/>}
+            {winner && <WinnerPopUp winner={winner} />}
           </div>
       </main>
     </div>

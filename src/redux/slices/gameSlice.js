@@ -25,7 +25,7 @@ const gameSlice = createSlice({
             }
         },
         setWinner: (state, action) => {
-            if (action.payload.winner === 'computer') {
+            if (action.payload === undefined) {
                 state.score.computer += 1;
 
                 state.usedCells.splice(
@@ -35,7 +35,7 @@ const gameSlice = createSlice({
                 );
             } 
             
-            if (action.payload.winner === 'player') {
+            if (action.payload === 'player') {
                 state.score.player += 1;
             }
 
@@ -64,7 +64,8 @@ const gameSlice = createSlice({
             let status = false;
 
             while (!status) {
-                const random = Math.floor(Math.random() * 100);
+                // const random = Math.floor(Math.random() * 100);
+                const random = Math.floor(Math.random() * (101 - 1) + 1);
 
                 if (state.usedCells.includes(random) || state.usedCells.includes(-random)) {
                     continue;
@@ -75,27 +76,27 @@ const gameSlice = createSlice({
                 }
             }
         },
-        checkWinner: (state) => {
-            if (state.roundEnd === null || state.roundEnd) {
-                state.roundEnd = false;
-            } else {
-                state.score.computer += 1;
+        // checkWinner: (state) => {
+        //     if (state.roundEnd === null || state.roundEnd) {
+        //         state.roundEnd = false;
+        //     } else {
+        //         state.score.computer += 1;
 
-                state.usedCells.splice(
-                    state.usedCells.indexOf(state.winCell), // rewrite number with minus sign for indetify winner
-                    1,
-                    -state.winCell
-                );
-            }
+        //         state.usedCells.splice(
+        //             state.usedCells.indexOf(state.winCell), // rewrite number with minus sign for indetify winner
+        //             1,
+        //             -state.winCell
+        //         );
+        //     }
 
-            if (state.score.computer >= (((state.fieldSize * state.fieldSize) / 2) + 1)) {
-                state.winner = 'Computer';
-            }
+        //     if (state.score.computer >= (((state.fieldSize * state.fieldSize) / 2) + 1)) {
+        //         state.winner = 'Computer';
+        //     }
 
-            if (state.score.computer === 50 && state.score.player === 50) {
-                state.winner = 'Nobody won, try again';
-            }
-        }
+        //     if (state.score.computer === 50 && state.score.player === 50) {
+        //         state.winner = 'Nobody won, try again';
+        //     }
+        // }
     }
 })
 
