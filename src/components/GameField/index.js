@@ -9,7 +9,7 @@ import style from './GameField.module.scss';
 export const GameField = () => {
     const dispatch = useDispatch();
 
-    const { gameStatus, difficulty, winner } = useSelector(state => state.game)
+    const { gameStatus, difficulty, winner, fieldSize } = useSelector(state => state.game)
 
     const [gameField, setGameField] = useState([]);
 
@@ -25,10 +25,10 @@ export const GameField = () => {
     const createField = () => {
         let array = [];
 
-        for (let row = 0; row < 10; row++) {
+        for (let row = 0; row < fieldSize; row++) {
             let rows = [];
 
-            for (let td = 0; td < 10; td++) {
+            for (let td = 0; td < fieldSize; td++) {
                 const id = row === 0 ? td + 1 : +(`${row}${td}`) + 1;
                 rows[td] = <Cell key={id} id={id} />;
             }

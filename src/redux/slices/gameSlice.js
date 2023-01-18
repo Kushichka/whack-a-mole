@@ -7,7 +7,7 @@ const initialState = {
     difficulty: { id: 0, timer: 1500 },
     score: { player: 0, computer: 0 },
     usedCells: [],
-    fieldSize: 10,
+    fieldSize: 25,
     roundEnd: null
 };
 
@@ -64,8 +64,8 @@ const gameSlice = createSlice({
             let status = false;
 
             while (!status) {
-                // const random = Math.floor(Math.random() * 100);
-                const random = Math.floor(Math.random() * (101 - 1) + 1);
+                const cellsAmount = (state.fieldSize * state.fieldSize) + 1
+                const random = Math.floor(Math.random() * (cellsAmount - 1) + 1);
 
                 if (state.usedCells.includes(random) || state.usedCells.includes(-random)) {
                     continue;
