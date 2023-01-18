@@ -7,7 +7,7 @@ const initialState = {
     difficulty: { id: 0, timer: 1500 },
     score: { player: 0, computer: 0 },
     usedCells: [],
-    fieldSize: 25,
+    fieldSize: 10,
     roundEnd: null
 };
 
