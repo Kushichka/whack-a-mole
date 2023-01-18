@@ -29,9 +29,9 @@ const gameSlice = createSlice({
                 state.score.computer += 1;
 
                 state.usedCells.splice(
-                    state.usedCells.indexOf(state.winCell), // rewrite number with minus sign for indetify winner
+                    state.usedCells.indexOf(state.winCell), 
                     1,
-                    -state.winCell
+                    -state.winCell // rewrite number with minus sign for indetify winner
                 );
             } 
             
@@ -75,28 +75,7 @@ const gameSlice = createSlice({
                     state.usedCells.push(random);
                 }
             }
-        },
-        // checkWinner: (state) => {
-        //     if (state.roundEnd === null || state.roundEnd) {
-        //         state.roundEnd = false;
-        //     } else {
-        //         state.score.computer += 1;
-
-        //         state.usedCells.splice(
-        //             state.usedCells.indexOf(state.winCell), // rewrite number with minus sign for indetify winner
-        //             1,
-        //             -state.winCell
-        //         );
-        //     }
-
-        //     if (state.score.computer >= (((state.fieldSize * state.fieldSize) / 2) + 1)) {
-        //         state.winner = 'Computer';
-        //     }
-
-        //     if (state.score.computer === 50 && state.score.player === 50) {
-        //         state.winner = 'Nobody won, try again';
-        //     }
-        // }
+        }
     }
 })
 
@@ -105,6 +84,5 @@ export const {actions, reducer} = gameSlice;
 export default reducer;
 export const { 
     setGameStatus, setDifficulty, setWinner, 
-    setRoundEnd, resetStore, randomNumber,
-    checkWinner
+    setRoundEnd, resetStore, randomNumber
 } = actions;

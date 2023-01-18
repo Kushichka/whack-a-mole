@@ -42,7 +42,7 @@ export const Cell = ({id}) => {
                 id={id}
                 onClick={gameStatus && winCell === id ? handleClick : null}
             >
-                {id}
+                {/* {id} */}
             </td>
         </>
     )
